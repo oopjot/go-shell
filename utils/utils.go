@@ -17,6 +17,28 @@ func GetRoot(dir entities.Dir) (entities.Dir, error) {
 	}
 }
 
+func GetDest(path string) (string, string) {
+	var pathArr []string
+	if path[0] == '/' {
+		pathArr = strings.Split(path[1:], "/")
+		if len(pathArr) == 0 {
+			return "/", pathArr[0]
+		} else if len(pathArr) == 1 {
+			return ".", pathArr[0]
+		} else {
+			last := len(pathArr) - 1
+			return strings.Join(pathArr[:last], "/"), pathArr[last]
+		}
+	}
+	pathArr = strings.Split(path, "/")
+	if len(pathArr) == 1 {
+		return ".", pathArr[0]
+	} else {
+		last := len(pathArr) - 1
+		return strings.Join(pathArr[:last], "/"), pathArr[last]
+	}
+}
+
 func Unpath(path string, currDir entities.Dir) (entities.Dir, error) {
 	if path[0] == '/' {
 		root, err := GetRoot(currDir)

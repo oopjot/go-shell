@@ -12,10 +12,11 @@ func main() {
 	var input string
 	root := entities.RootDir()
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	input = scanner.Text()
-	err := commands.Command(root, input)
-	if err != nil {
-		fmt.Println(err)
+	for scanner.Scan() {
+		input = scanner.Text()
+		err := commands.Command(root, input)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }

@@ -6,21 +6,21 @@ import (
 	"errors"
 )
 
-func Touch(currDir entities.Dir, args ...string) error {
+func Mkdir(currDir entities.Dir, args ...string) error {
 	if len(args) == 0 {
-		return errors.New("touch: missing file operand")
+		return errors.New("mkdir: missing operand")
 	}
 
 	for _, path := range args {
 		var dest entities.Dir
 		var err error
 
-		dirPath, filename := utils.GetDest(path)
+		dirPath, dirname := utils.GetDest(path)
 		dest, err = utils.Unpath(dirPath, currDir)
 		if err != nil {
 			return err
 		}
-		_, err = entities.NewFile(filename, dest)
+		_, err = entities.NewDir(dirname, dest)
 		if err != nil {
 			return err
 		}
