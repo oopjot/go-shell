@@ -19,6 +19,7 @@ type File interface {
 	Append(line string)
 	ChangeParent(to Dir)
 	Rename(name string) error
+	Parent() Dir
 }
 
 func NewFile(name string, parent Dir) (File, error) {
@@ -67,4 +68,8 @@ func (f *file) Rename(name string) error {
 	}
 	f.name = name
 	return nil
+}
+
+func (f *file) Parent() Dir {
+	return f.parent
 }

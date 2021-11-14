@@ -23,6 +23,9 @@ type Dir interface {
 	ChangeParent(to Dir)
 	List() string
 	IsRoot() bool
+	Parent() (Dir, error)
+	FindDir(name string) (Dir, error)
+	FindFile(name string) (File, error)
 }
 
 func NewDir(name string, parent Dir) (Dir, error) {
@@ -129,4 +132,32 @@ func (d *dir) List() string {
 
 func (d *dir) IsRoot() bool {
 	return false
+}
+
+func (d *dir) Parent() (Dir, error) {
+	return d.parent, nil
+}
+
+func (d *dir) FindDir(name string) (Dir, error) {
+	if name == ".." {
+		return d.Parent()
+	}
+	if name == "." {
+		return d, nil
+	}
+	for _, _d := range d.dirs {
+		if _d.Name() == name {
+			return _d, nil
+		}
+	}
+	return nil, errors.New("Does not exist")
+}
+
+func (d *dir) FindFile(name string) (File, error) {
+	for _, f := range d.files {
+		if f.Name() == name {
+			return f, nil
+		}
+	}
+	return nil, errors.New("Does not exist")
 }

@@ -93,3 +93,31 @@ func (d *rootDir) List() string {
 func (d *rootDir) IsRoot() bool {
 	return true
 }
+
+func (d *rootDir) Parent() (Dir, error) {
+	return nil, errors.New("Root doesn't have a parent")
+}
+
+func (d *rootDir) FindDir(name string) (Dir, error) {
+	if name == ".." {
+		return d.Parent()
+	}
+	if name == "." {
+		return d, nil
+	}
+	for _, _d := range d.dirs {
+		if _d.Name() == name {
+			return _d, nil
+		}
+	}
+	return nil, errors.New("Does not exist")
+}
+
+func (d *rootDir) FindFile(name string) (File, error) {
+	for _, f := range d.files {
+		if f.Name() == name {
+			return f, nil
+		}
+	}
+	return nil, errors.New("Does not exist")
+}
