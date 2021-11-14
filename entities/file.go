@@ -1,5 +1,11 @@
 package entities
 
+import (
+	"errors"
+	"strings"
+	"fmt"
+)
+
 type file struct {
 	name string
 	content string
@@ -12,6 +18,7 @@ type File interface {
 	Write(content string)
 	Append(line string)
 	ChangeParent(to Dir)
+	Rename(name string) error
 }
 
 func NewFile(name string, parent Dir) (File, error) {
@@ -42,4 +49,22 @@ func (f *file) Append(line string) {
 
 func (f *file) ChangeParent(to Dir) {
 	f.parent = to
+}
+
+func (f *file) Rename(name string) error {
+	if name == f.Name() {
+		return nil
+	}
+	if len(name) == 0 {
+		return errors.New("Name cannot be empty.")
+	}
+	if strings.ContainsRune(name, '/') {
+		return errors.New("Name cannot contain '/'.")
+	}
+	if (f.parent.Exists(name)) {
+		msg := fmt.Sprintf("'%s': Already exists", name)
+		return errors.New(msg)
+	}
+	f.name = name
+	return nil
 }

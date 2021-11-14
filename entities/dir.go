@@ -3,6 +3,7 @@ package entities
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 type dir struct {
@@ -21,7 +22,7 @@ type Dir interface {
 	Rename(name string) error
 	ChangeParent(to Dir)
 	List() string
-	isRoot() bool
+	IsRoot() bool
 }
 
 func NewDir(name string, parent Dir) (Dir, error) {
@@ -98,7 +99,16 @@ func (d *dir) ChangeParent(to Dir) {
 }
 
 func (d *dir) Rename(name string) error {
-	if (d.Exists(name)) {
+	if name == d.Name() {
+		return nil
+	}
+	if len(name) == 0 {
+		return errors.New("Name cannot be empty.")
+	}
+	if strings.ContainsRune(name, '/') {
+		return errors.New("Name cannot contain '/'.")
+	}
+	if (d.parent.Exists(name)) {
 		msg := fmt.Sprintf("'%s': Already exists", name)
 		return errors.New(msg)
 	}
@@ -117,6 +127,6 @@ func (d *dir) List() string {
 	return result
 }
 
-func (d *dir) isRoot() bool {
+func (d *dir) IsRoot() bool {
 	return false
 }

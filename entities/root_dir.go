@@ -90,6 +90,6 @@ func (d *rootDir) List() string {
 	return result
 }
 
-func (d *rootDir) isRoot() bool {
+func (d *rootDir) IsRoot() bool {
 	return true
 }
