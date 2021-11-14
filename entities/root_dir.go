@@ -121,3 +121,4 @@ func (d *rootDir) FindFile(name string) (File, error) {
 	}
 	return nil, errors.New("Does not exist")
 }
+

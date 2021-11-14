@@ -7,7 +7,7 @@ import (
 	"errors"
 )
 
-func Command(currDir entities.Dir, input string) error {
+func Command(currDir entities.Dir, p *entities.Dir, input string) error {
 	if (len(input)) == 0 {
 		return nil
 	}
@@ -22,13 +22,17 @@ func Command(currDir entities.Dir, input string) error {
 		case "mkdir":
 			return Mkdir(currDir, args...)
 		case "cd":
-			fmt.Printf("Got cd in %s\n", currDir.Name())
+			return Cd(currDir, p, args...)
 		case "echo":
-			fmt.Printf("Got echo in %s\n", currDir.Name())
+			return Echo(currDir, args...)
 		case "cat":
-			fmt.Printf("Got cat in %s\n", currDir.Name())
+			return Cat(currDir, args...)
 		case "rm":
-			fmt.Print("Got rm\n")
+			return Rm(currDir, args...)
+		case "mv":
+			return Mv(currDir, args...)
+		case "clear":
+			return Clear()
 		default:
 			return errors.New(fmt.Sprintf("'%s': command not found", command))
 	}

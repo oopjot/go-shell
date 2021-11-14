@@ -39,6 +39,17 @@ func GetDest(path string) (string, string) {
 	}
 }
 
+func Path(dir entities.Dir) string {
+	if dir.IsRoot() {
+		return "/"
+	}
+	parent, _ := dir.Parent()
+	if parent.IsRoot() {
+		return Path(parent) + dir.Name()
+	}
+	return Path(parent) + "/" + dir.Name()
+}
+
 func Unpath(path string, currDir entities.Dir) (entities.Dir, error) {
 	if path[0] == '/' {
 		root, err := GetRoot(currDir)

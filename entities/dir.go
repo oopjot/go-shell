@@ -59,7 +59,7 @@ func (d *dir) Exists(name string) bool {
 
 func (d *dir) AddFile(newFile File) error {
 	if d.Exists(newFile.Name()) {
-		msg := fmt.Sprintf("'%s': Already exists", newFile.Name())
+		msg := fmt.Sprintf("'%s': already exists", newFile.Name())
 		return errors.New(msg)
 	}
 	d.files = append(d.files, newFile)
@@ -68,7 +68,7 @@ func (d *dir) AddFile(newFile File) error {
 
 func (d *dir) AddDir(newDir Dir) error {
 	if d.Exists(newDir.Name()) {
-		msg := fmt.Sprintf("'%s': Already extsts", newDir.Name())
+		msg := fmt.Sprintf("'%s': already exists", newDir.Name())
 		return errors.New(msg)
 	}
 	d.dirs = append(d.dirs, newDir)
@@ -93,7 +93,7 @@ func (d *dir) Remove(name string) error {
 		}
 	}
 
-	msg := fmt.Sprintf("'%s': No such file or directory", name)
+	msg := fmt.Sprintf("'%s': no such file or directory", name)
 	return errors.New(msg)
 }
 
@@ -106,13 +106,13 @@ func (d *dir) Rename(name string) error {
 		return nil
 	}
 	if len(name) == 0 {
-		return errors.New("Name cannot be empty.")
+		return errors.New("name cannot be empty")
 	}
 	if strings.ContainsRune(name, '/') {
-		return errors.New("Name cannot contain '/'.")
+		return errors.New("name cannot contain '/'")
 	}
 	if (d.parent.Exists(name)) {
-		msg := fmt.Sprintf("'%s': Already exists", name)
+		msg := fmt.Sprintf("'%s': already exists", name)
 		return errors.New(msg)
 	}
 	d.name = name
@@ -150,7 +150,7 @@ func (d *dir) FindDir(name string) (Dir, error) {
 			return _d, nil
 		}
 	}
-	return nil, errors.New("Does not exist")
+	return nil, errors.New(fmt.Sprintf("'%s': does not exist", name))
 }
 
 func (d *dir) FindFile(name string) (File, error) {
@@ -159,5 +159,6 @@ func (d *dir) FindFile(name string) (File, error) {
 			return f, nil
 		}
 	}
-	return nil, errors.New("Does not exist")
+	return nil, errors.New(fmt.Sprintf("'%s': does not exist", name))
 }
+
