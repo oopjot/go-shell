@@ -57,13 +57,13 @@ func (f *file) Rename(name string) error {
 		return nil
 	}
 	if len(name) == 0 {
-		return errors.New("Name cannot be empty.")
+		return errors.New("name cannot be empty.")
 	}
 	if strings.ContainsRune(name, '/') {
-		return errors.New("Name cannot contain '/'.")
+		return errors.New("name cannot contain '/'.")
 	}
 	if (f.parent.Exists(name)) {
-		msg := fmt.Sprintf("'%s': Already exists", name)
+		msg := fmt.Sprintf("'%s': already exists", name)
 		return errors.New(msg)
 	}
 	f.name = name

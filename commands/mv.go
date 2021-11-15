@@ -79,11 +79,10 @@ func handleDir (dest entities.Dir, source ...interface{}) error {
 	for _, entity := range source {
 		switch entity.(type){
 			case entities.File:
-				fmt.Println("siema plik")
 				name := entity.(entities.File).Name()
 				_, err := dest.FindDir(name)
 				if err == nil {
-					return errors.New(fmt.Sprintf("mv: '%s' already exists"))
+					return errors.New(fmt.Sprintf("mv: '%s' already exists", name))
 				}
 				_, err = dest.FindFile(name)
 				if err == nil {
@@ -96,11 +95,10 @@ func handleDir (dest entities.Dir, source ...interface{}) error {
 					return err
 				}
 			case entities.Dir:
-				fmt.Println("Siema dir")
 				name := entity.(entities.Dir).Name()
 				_, err := dest.FindFile(name)
 				if err == nil {
-					return errors.New(fmt.Sprintf("mv: '%s' already exists"))
+					return errors.New(fmt.Sprintf("mv: '%s' already exists", name))
 				}
 				_, err = dest.FindDir(name)
 				if err == nil {
