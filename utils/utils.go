@@ -74,7 +74,7 @@ func Unpath(path string, currDir entities.Dir) (entities.Dir, error) {
 
 func Contains(input string, runes ...rune) bool {
 	for _, r := range runes {
-		strings.ContainsRune(input, r) {
+		if strings.ContainsRune(input, r) {
 			return true
 		}
 	}

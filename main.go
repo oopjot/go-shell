@@ -16,14 +16,17 @@ func main() {
 	for {
 		fmt.Print("mushla login: ")
 		scanner.Scan()
-		input = scanner.Text()
-		if utils.MyContains(input, '/', '\t', ' '
-	)
+		login = scanner.Text()
+		if utils.Contains(login, '/', '\t', ' ', '\n', '.') {
+			fmt.Printf("'%s': invalid login\n", login)
+		} else {
+			break
+		}
 	}
 	root := entities.RootDir()
 	currDir := root
 	for {
-		fmt.Printf("user@mushla %s ω ", utils.Path(currDir))
+		fmt.Printf("%s@mushla %s ω ", login, utils.Path(currDir))
 		scanner.Scan()
 		input = scanner.Text()
 		err := commands.Command(currDir, &currDir, input)
