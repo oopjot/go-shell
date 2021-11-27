@@ -1,2 +1,2 @@
 # mushla
-Lil shell emulator written in Go :)
+Lil shell imitator written in Go :)
