@@ -1,2 +1,2 @@
 # mushla
-Lil shell imitator written in Go :)
+Lil' shell simulator created for fun. Yes, it is useless.
